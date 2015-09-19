@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FloripaBus.Droid", "Droid\F
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FloripaBus.UITests", "UITests\FloripaBus.UITests.csproj", "{ECEC998A-203E-439E-9421-BEB653049CA4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FloripaBus.Tests", "FloripaBus.Tests\FloripaBus.Tests.csproj", "{EF98B762-BD8A-4F3D-8B0E-23E8095A9208}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,5 +27,9 @@ Global
 		{ECEC998A-203E-439E-9421-BEB653049CA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECEC998A-203E-439E-9421-BEB653049CA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ECEC998A-203E-439E-9421-BEB653049CA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF98B762-BD8A-4F3D-8B0E-23E8095A9208}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF98B762-BD8A-4F3D-8B0E-23E8095A9208}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF98B762-BD8A-4F3D-8B0E-23E8095A9208}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF98B762-BD8A-4F3D-8B0E-23E8095A9208}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
