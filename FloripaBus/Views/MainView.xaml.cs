@@ -10,7 +10,7 @@ namespace FloripaBus
 		public MainView ()
 		{
 			InitializeComponent ();
-			this.BindingContext = new MainViewModel ();
+			this.BindingContext = Ninja.Get<MainViewModel> ();
 		}
 	}
 }

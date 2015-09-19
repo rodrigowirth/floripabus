@@ -19,9 +19,9 @@ namespace FloripaBus
 			}
 		}
 
-		public MainViewModel()
+		public MainViewModel(IRouteRepository routeRepository)
 		{
-			_routeRepository = DependencyService.Get<IRouteRepository> ();
+			_routeRepository = routeRepository;
 			this.Load ();
 		}
 

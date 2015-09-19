@@ -1,14 +1,21 @@
 ﻿using System;
 
 using Xamarin.Forms;
+using Ninject;
+using Ninject.Modules;
 
 namespace FloripaBus
 {
 	public class App : Application
 	{
+		public static StandardKernel Container { get; set; }
+
 		public App ()
 		{
+			DependencyService.Register<MainViewModel> ();
 			DependencyService.Register<IRouteRepository, RouteRepository> ();
+
+			Ninja.LoadModule (new SharedModule ());
 
 			// The root page of your application
 			MainPage = new NavigationPage (new MainView ());
