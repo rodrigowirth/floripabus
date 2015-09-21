@@ -2,12 +2,14 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="FloripaBus.MainView">
 	<ContentPage.Content>
 		<StackLayout>			
+			<Entry Text="{Binding SearchText}" Placeholder="Stop name to search..."></Entry>
+			<Button Text="Search" Command="{Binding SearchCommand}"></Button>
 			<ListView x:Name="RoutesListView" ItemsSource="{Binding Routes}">
 				<ListView.ItemTemplate>
 					<DataTemplate>
 						<ViewCell>
 							<ViewCell.View>
-								<StackLayout Spacing="5">
+								<StackLayout Spacing="5">									
 	                    			<Label Text="{Binding ShortName}"></Label>
 	                    			<Label Text="{Binding LongName}"></Label>
 	                  			</StackLayout>

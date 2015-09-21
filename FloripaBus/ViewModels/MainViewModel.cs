@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
+using System.Windows.Input;
 
 namespace FloripaBus
 {
@@ -8,26 +9,54 @@ namespace FloripaBus
 	{
 		private readonly IRouteRepository _routeRepository;
 
-		ObservableCollection<Route> routes;
+		private ObservableCollection<Route> _routes;
 		public ObservableCollection<Route> Routes {
 			get {
-				return routes;
+				return _routes;
 			}
 			set {
-				routes = value;
+				_routes = value;
 				Notify ("Routes");
+			}
+		}
+
+		private string _searchText;
+		public string SearchText {
+			get {
+				return _searchText;
+			}
+			set {
+				_searchText = value;
+				Notify ("SearchText");
+			}
+		}
+
+		private ICommand _searchCommand;
+		public ICommand SearchCommand {
+			get {
+				return _searchCommand;
+			}
+			set {
+				_searchCommand = value;
 			}
 		}
 
 		public MainViewModel(IRouteRepository routeRepository)
 		{
 			_routeRepository = routeRepository;
+			this.SearchCommand = new Command (this.Search);
 			this.Load ();
 		}
 
 		public async void Load()
 		{
 			var routesList = await _routeRepository.FindRoutesByStopNameAsync (string.Empty);
+			this.Routes = new ObservableCollection<Route> (routesList);
+		}
+
+		public async void Search()
+		{
+			var routesList = await _routeRepository.FindRoutesByStopNameAsync (this.SearchText);
 			this.Routes = new ObservableCollection<Route> (routesList);
 		}
 	}
