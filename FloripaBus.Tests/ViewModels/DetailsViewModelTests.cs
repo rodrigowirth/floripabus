@@ -38,6 +38,30 @@ namespace FloripaBus.Tests
 			var viewModel = new DetailsViewModel (route, routeRepositoryMock.Object);
 			Assert.AreEqual (viewModel.RouteStops.Count, amount);
 		}
+
+		[Test]
+		public void GivenAMixOfDeparturesThenShowItOrganizedByCalendar()
+		{
+			IList<RouteDeparture> departures = new List<RouteDeparture> ();
+			departures.Add (new RouteDeparture ("WEEKDAY", "05:50"));
+			departures.Add (new RouteDeparture ("WEEKDAY", "06:07"));
+			departures.Add (new RouteDeparture ("SATURDAY", "06:25"));
+			departures.Add (new RouteDeparture ("SATURDAY", "05:50"));
+			departures.Add (new RouteDeparture ("SUNDAY", "07:00"));
+			departures.Add (new RouteDeparture ("SUNDAY", "08:15"));
+			departures.Add (new RouteDeparture ("SUNDAY", "09:15"));
+
+			routeRepositoryMock.Setup (x => x.FindStopsByRouteIdAsync (It.IsAny<int> ()))
+				.ReturnsAsync (new List<RouteStop>());
+
+			routeRepositoryMock.Setup (x => x.FindDeparturesByRouteIdAsync (It.IsAny<int> ()))
+				.ReturnsAsync (departures);
+
+			var viewModel = new DetailsViewModel (route, routeRepositoryMock.Object);
+			Assert.AreEqual (viewModel.WeekDayDepartures.Count, 2);
+			Assert.AreEqual (viewModel.SaturdayDepartures.Count, 2);
+			Assert.AreEqual (viewModel.SundayDepartures.Count, 3);
+		}
 	}
 }
 

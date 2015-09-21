@@ -38,9 +38,7 @@ namespace FloripaBus.Tests
 			IList<Route> routes = new List<Route> ();
 			routes.Add(new Route(1, "110", "Coral"));
 
-			var routeRepositoryMock = new Mock<IRouteRepository> ();
-			routeRepositoryMock.Setup (x => x.FindRoutesByStopNameAsync (It.IsAny<String> ()))
-				.ReturnsAsync (routes);
+			routeRepositoryMock.Setup (x => x.FindRoutesByStopNameAsync (It.IsAny<String> ())).ReturnsAsync (routes);
 
 			var viewModel = new MainViewModel (routeRepositoryMock.Object, navigationServiceMock.Object);
 			Assert.AreEqual (viewModel.Routes[0].Id, 1);
