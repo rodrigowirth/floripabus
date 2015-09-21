@@ -31,6 +31,17 @@ namespace FloripaBus
 			}
 		}
 
+		private bool _isLoading;
+		public bool IsLoading {
+			get {
+				return _isLoading;
+			}
+			set {
+				_isLoading = value;
+				Notify ("IsLoading");
+			}
+		}
+
 		private ICommand _searchCommand;
 		public ICommand SearchCommand {
 			get {
@@ -50,14 +61,22 @@ namespace FloripaBus
 
 		public async void Load()
 		{
+			this.IsLoading = true;
+
 			var routesList = await _routeRepository.FindRoutesByStopNameAsync (string.Empty);
 			this.Routes = new ObservableCollection<Route> (routesList);
+
+			this.IsLoading = false;
 		}
 
 		public async void Search()
 		{
+			this.IsLoading = true;
+
 			var routesList = await _routeRepository.FindRoutesByStopNameAsync (this.SearchText);
 			this.Routes = new ObservableCollection<Route> (routesList);
+
+			this.IsLoading = false;
 		}
 	}
 }
