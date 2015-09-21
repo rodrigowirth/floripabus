@@ -11,6 +11,16 @@ namespace FloripaBus.Tests
 		Route route = new Route (1, "198", "Brusque");
 		Mock<IRouteRepository> routeRepositoryMock = new Mock<IRouteRepository> ();
 
+		[SetUp]
+		public void Setup()
+		{
+			routeRepositoryMock.Setup (x => x.FindStopsByRouteIdAsync (It.IsAny<int> ()))
+				.ReturnsAsync (new List<RouteStop>());
+
+			routeRepositoryMock.Setup (x => x.FindDeparturesByRouteIdAsync (It.IsAny<int> ()))
+				.ReturnsAsync (new List<RouteDeparture>());
+		}
+
 		[Test]
 		public void TheTitleShouldBeTheShortNamePlusTheLongName()
 		{			
@@ -61,6 +71,22 @@ namespace FloripaBus.Tests
 			Assert.AreEqual (viewModel.WeekDayDepartures.Count, 2);
 			Assert.AreEqual (viewModel.SaturdayDepartures.Count, 2);
 			Assert.AreEqual (viewModel.SundayDepartures.Count, 3);
+		}
+
+		[Test]
+		public void WhenLoadingDontShowData()
+		{
+			var viewModel = new DetailsViewModel (route, routeRepositoryMock.Object);
+			viewModel.IsLoading = true;
+			Assert.IsFalse (viewModel.ShowData);
+		}
+
+		[Test]
+		public void WhenNotLoadingShowData()
+		{
+			var viewModel = new DetailsViewModel (route, routeRepositoryMock.Object);
+			viewModel.IsLoading = false;
+			Assert.IsTrue (viewModel.ShowData);
 		}
 	}
 }

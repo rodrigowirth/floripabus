@@ -1,9 +1,10 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="FloripaBus.DetailsView" Title="{Binding Title}">	
 	<ContentPage Title="Stops">
-		<StackLayout>
-			<ListView x:Name="RouteStopsListView" ItemsSource="{Binding RouteStops}">
-					<ListView.ItemTemplate>
+		<StackLayout>		
+			<ActivityIndicator IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" VerticalOptions="Start" />		
+			<ListView x:Name="RouteStopsListView" ItemsSource="{Binding RouteStops}" IsVisible="{Binding ShowData}">
+						<ListView.ItemTemplate>
 						<DataTemplate>
 							<ViewCell>
 								<ViewCell.View>
@@ -16,7 +17,7 @@
 						</DataTemplate>
 					</ListView.ItemTemplate>
 				</ListView>
-		</StackLayout>
+		</StackLayout>	
 	</ContentPage>
 	<CarouselPage Title="Departures">
 		<ContentPage>

@@ -73,7 +73,19 @@ namespace FloripaBus
 			}
 			set {
 				_isLoading = value;
+				this.ShowData = !_isLoading;
 				Notify ("IsLoading");
+			}
+		}
+
+		private bool _showData;
+		public bool ShowData {
+			get {
+				return _showData;
+			}
+			set {
+				_showData = value;
+				Notify ("ShowData");
 			}
 		}
 
