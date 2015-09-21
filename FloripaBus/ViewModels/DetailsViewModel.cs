@@ -66,6 +66,17 @@ namespace FloripaBus
 			}
 		}
 
+		private bool _isLoading;
+		public bool IsLoading {
+			get {
+				return _isLoading;
+			}
+			set {
+				_isLoading = value;
+				Notify ("IsLoading");
+			}
+		}
+
 		public DetailsViewModel (Route route, IRouteRepository routeRepository)
 		{
 			_routeRepository = routeRepository;
@@ -76,6 +87,8 @@ namespace FloripaBus
 
 		public async void Load()
 		{
+			this.IsLoading = true;
+
 			var stopsList = await _routeRepository.FindStopsByRouteIdAsync (this.Route.Id);
 			this.RouteStops = new ObservableCollection<RouteStop> (stopsList);
 
@@ -99,6 +112,8 @@ namespace FloripaBus
 					break;
 				}
 			}
+
+			this.IsLoading = false;
 		}
 	}
 }
