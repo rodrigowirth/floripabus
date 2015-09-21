@@ -1,23 +1,50 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 
 namespace FloripaBus
 {
 	public class DetailsViewModel : ViewModelBase
 	{
-		private int _routeId;
-		public int RouteId {
+		private readonly IRouteRepository _routeRepository;
+
+		private Route _route;
+		public Route Route {
 			get {
-				return _routeId;
+				return _route;
 			}
 			set {
-				_routeId = value;
-				Notify ("RouteId");
+				_route = value;
+				Notify ("Route");
 			}
 		}
 
-		public DetailsViewModel ()
+		public string Title {
+			get { return String.Format ("{0} - {1}", Route.ShortName, Route.LongName); }
+		}
+
+		private ObservableCollection<RouteStop> _routeStops;
+		public ObservableCollection<RouteStop> RouteStops {
+			get {
+				return _routeStops;
+			}
+			set {
+				_routeStops = value;
+				Notify ("RouteStops");
+			}
+		}
+
+		public DetailsViewModel (Route route, IRouteRepository routeRepository)
 		{
-			this.RouteId = 123;
+			_routeRepository = routeRepository;
+
+			this.Route = route;
+			this.Load ();
+		}
+
+		public async void Load()
+		{
+			var stopsList = await _routeRepository.FindStopsByRouteIdAsync (this.Route.Id);
+			this.RouteStops = new ObservableCollection<RouteStop> (stopsList);
 		}
 	}
 }

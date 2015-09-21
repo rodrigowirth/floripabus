@@ -1,6 +1,7 @@
 ﻿using System;
 using Ninject;
 using Ninject.Modules;
+using Ninject.Parameters;
 
 namespace FloripaBus
 {
@@ -14,9 +15,9 @@ namespace FloripaBus
 			_kernel.Load (module);
 		}
 
-		public static T Get<T>()
+		public static T Get<T>(params IParameter[] parameters)
 		{
-			return _kernel.Get<T>();
+			return _kernel.Get<T>(parameters);
 		}
 	}
 }

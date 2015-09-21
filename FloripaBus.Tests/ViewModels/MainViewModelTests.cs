@@ -60,13 +60,13 @@ namespace FloripaBus.Tests
 		}
 
 		[Test]
-		public void WhenClickingToViewDetailsShouldMoveToTheDetailsPagePassingTheRouteId()
+		public void WhenClickingToViewDetailsShouldMoveToTheDetailsPage()
 		{
 			var viewModel = new MainViewModel (routeRepositoryMock.Object, navigationServiceMock.Object);
 
 			viewModel.SelectedRoute = new Route (1, String.Empty, String.Empty);
 
-			navigationServiceMock.Verify (x => x.NavigateToDetails (1), Times.Once);
+			navigationServiceMock.Verify (x => x.NavigateToDetails (It.IsAny<Route>()), Times.Once);
 		}
 
 		[Test]
