@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace FloripaBus
 {
-	public partial class DetailsView : ContentPage
+	public partial class DetailsView : TabbedPage
 	{
 		public DetailsView ()
 		{
