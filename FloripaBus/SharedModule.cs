@@ -7,8 +7,12 @@ namespace FloripaBus
 	{
 		public override void Load() 
 		{
+			this.Bind<INavigationService> ().To<NavigationService> ();
+
 			this.Bind<IRouteRepository>().To<RouteRepository>();
+
 			this.Bind<MainViewModel> ().ToSelf ();
+			this.Bind<DetailsViewModel> ().ToSelf ();
 		}
 	}
 }

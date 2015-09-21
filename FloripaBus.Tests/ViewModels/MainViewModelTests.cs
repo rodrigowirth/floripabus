@@ -10,6 +10,7 @@ namespace FloripaBus.Tests
 	public class MainViewModelTests
 	{
 		Mock<IRouteRepository> routeRepositoryMock = new Mock<IRouteRepository> ();
+		Mock<INavigationService> navigationServiceMock = new Mock<INavigationService>();
 
 		[TestCase(0)]
 		[TestCase(1)]
@@ -27,7 +28,7 @@ namespace FloripaBus.Tests
 			routeRepositoryMock.Setup (x => x.FindRoutesByStopNameAsync (It.IsAny<String> ()))
 				.ReturnsAsync (routes);
 
-			var viewModel = new MainViewModel (routeRepositoryMock.Object);
+			var viewModel = new MainViewModel (routeRepositoryMock.Object, navigationServiceMock.Object);
 			Assert.AreEqual (viewModel.Routes.Count, amount);
 		}
 
@@ -41,21 +42,41 @@ namespace FloripaBus.Tests
 			routeRepositoryMock.Setup (x => x.FindRoutesByStopNameAsync (It.IsAny<String> ()))
 				.ReturnsAsync (routes);
 
-			var viewModel = new MainViewModel (routeRepositoryMock.Object);
+			var viewModel = new MainViewModel (routeRepositoryMock.Object, navigationServiceMock.Object);
 			Assert.AreEqual (viewModel.Routes[0].Id, 1);
 			Assert.AreEqual (viewModel.Routes[0].ShortName, "110");
 			Assert.AreEqual (viewModel.Routes[0].LongName, "Coral");
 		}
 
 		[Test]
-		public void WhenExecutingSearchCommandShouldGetRoutesBasedOnTheStopNamesToSearch()
+		public void WhenSearchingShouldGetRoutesBasedOnTheStopNamesToSearch()
 		{
-			var viewModel = new MainViewModel (routeRepositoryMock.Object);
+			var viewModel = new MainViewModel (routeRepositoryMock.Object, navigationServiceMock.Object);
 			viewModel.SearchText = "Castelo Branco";
 
 			viewModel.SearchCommand.Execute (null);
 
 			routeRepositoryMock.Verify(x => x.FindRoutesByStopNameAsync("Castelo Branco"), Times.Once);
+		}
+
+		[Test]
+		public void WhenClickingToViewDetailsShouldMoveToTheDetailsPagePassingTheRouteId()
+		{
+			var viewModel = new MainViewModel (routeRepositoryMock.Object, navigationServiceMock.Object);
+
+			viewModel.SelectedRoute = new Route (1, String.Empty, String.Empty);
+
+			navigationServiceMock.Verify (x => x.NavigateToDetails (1), Times.Once);
+		}
+
+		[Test]
+		public void WhenSelectingARouteShouldUnselectItAfterUsing()
+		{
+			var viewModel = new MainViewModel (routeRepositoryMock.Object, navigationServiceMock.Object);
+
+			viewModel.SelectedRoute = new Route (1, String.Empty, String.Empty);
+
+			Assert.IsNull (viewModel.SelectedRoute);
 		}
 	}
 }

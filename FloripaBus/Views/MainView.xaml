@@ -5,7 +5,7 @@
 			<StackLayout>			
 				<Entry Text="{Binding SearchText}" Placeholder="Stop name to search..."></Entry>
 				<Button Text="Search" Command="{Binding SearchCommand}"></Button>
-				<ListView x:Name="RoutesListView" ItemsSource="{Binding Routes}">
+				<ListView x:Name="RoutesListView" ItemsSource="{Binding Routes}" SelectedItem="{Binding SelectedRoute}">
 					<ListView.ItemTemplate>
 						<DataTemplate>
 							<ViewCell>

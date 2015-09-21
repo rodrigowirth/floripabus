@@ -6,8 +6,9 @@ using System.Windows.Input;
 namespace FloripaBus
 {
 	public class MainViewModel : ViewModelBase
-	{
+	{		
 		private readonly IRouteRepository _routeRepository;
+		private readonly INavigationService _navigationService;
 
 		private ObservableCollection<Route> _routes;
 		public ObservableCollection<Route> Routes {
@@ -52,9 +53,24 @@ namespace FloripaBus
 			}
 		}
 
-		public MainViewModel(IRouteRepository routeRepository)
+		private Route _selectedRoute = null;
+		public Route SelectedRoute
+		{
+			get {
+				return _selectedRoute;
+			}
+			set {
+				if (value != null) {
+					_navigationService.NavigateToDetails (value.Id);
+					Notify ("SelectedRoute");
+				}
+			}
+		}
+
+		public MainViewModel(IRouteRepository routeRepository, INavigationService navigationService)
 		{
 			_routeRepository = routeRepository;
+			_navigationService = navigationService;
 			this.SearchCommand = new Command (this.Search);
 			this.Load ();
 		}
