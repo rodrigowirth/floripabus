@@ -71,21 +71,11 @@ namespace FloripaBus
 		{
 			_routeRepository = routeRepository;
 			_navigationService = navigationService;
-			this.SearchCommand = new Command (this.Search);
-			this.Load ();
-		}
+			this.SearchCommand = new Command (this.SearchAsync);
+			this.SearchAsync ();
+		}			
 
-		public async void Load()
-		{
-			this.IsLoading = true;
-
-			var routesList = await _routeRepository.FindRoutesByStopNameAsync (string.Empty);
-			this.Routes = new ObservableCollection<Route> (routesList);
-
-			this.IsLoading = false;
-		}
-
-		public async void Search()
+		public async void SearchAsync()
 		{
 			this.IsLoading = true;
 
