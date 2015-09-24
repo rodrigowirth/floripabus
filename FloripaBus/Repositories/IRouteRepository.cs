@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using Newtonsoft.Json;
+using System.Net;
 
 namespace FloripaBus
 {
@@ -17,27 +18,35 @@ namespace FloripaBus
 
 	public class RouteRepository : IRouteRepository
 	{		
+		private const string FIND_ROUTES_URL = "https://api.appglu.com/v1/queries/findRoutesByStopName/run";
+		private const string FIND_STOPS_URL = "https://api.appglu.com/v1/queries/findStopsByRouteId/run";
+		private const string FIND_DEPARTURES_URL = "https://api.appglu.com/v1/queries/findDeparturesByRouteId/run";
+
+		private readonly HttpClient _httpClient;
+
+		public RouteRepository(HttpClient httpClient)
+		{
+			_httpClient = httpClient;
+		}
+
 		public async Task<IList<Route>> FindRoutesByStopNameAsync (string stopName)
 		{
-			string responseContent;
-			using (var client = new HttpClient ()) 
-			{
-				var request = new HttpRequestMessage(HttpMethod.Post, "https://api.appglu.com/v1/queries/findRoutesByStopName/run");
+			IList<Route> routes = new List<Route> ();
+
+			using (var request = new HttpRequestMessage (HttpMethod.Post, FIND_ROUTES_URL)) {
+			
 				AddDefaultHeaders (request);
 
 				var body = "{ \"params\": { \"stopName\": \"%" + stopName + "%\" } }";
-				var content = new StringContent(body, Encoding.UTF8, "application/json");
+				var content = new StringContent (body, Encoding.UTF8, "application/json");
 				request.Content = content;
 
-				var response = await client.SendAsync(request);
-				responseContent = await response.Content.ReadAsStringAsync();
-			}
+				var responseContent = await this.ExecuteRequestAsync (request);
 
-			IList<Route> routes = new List<Route> ();
-			RoutesReponse<RouteRow> data = JsonConvert.DeserializeObject<RoutesReponse<RouteRow>>(responseContent);
-			foreach (var row in data.Rows)
-			{
-				routes.Add (new Route(row.Id, row.ShortName, row.LongName));
+				RoutesReponse<RouteRow> data = JsonConvert.DeserializeObject<RoutesReponse<RouteRow>> (responseContent);
+				foreach (var row in data.Rows) {
+					routes.Add (new Route (row.Id, row.ShortName, row.LongName));
+				}
 			}
 				
 			return routes;
@@ -45,25 +54,22 @@ namespace FloripaBus
 
 		public async Task<IList<RouteStop>> FindStopsByRouteIdAsync (int routeId)
 		{
-			string responseContent;
-			using (var client = new HttpClient ()) 
-			{
-				var request = new HttpRequestMessage(HttpMethod.Post, "https://api.appglu.com/v1/queries/findStopsByRouteId/run");
+			IList<RouteStop> routeStops = new List<RouteStop> ();
+
+			using (var request = new HttpRequestMessage (HttpMethod.Post, FIND_STOPS_URL)) {
+				
 				AddDefaultHeaders (request);
 
 				var body = "{ \"params\": { \"routeId\": \"" + routeId + "\" } }";
-				var content = new StringContent(body, Encoding.UTF8, "application/json");
+				var content = new StringContent (body, Encoding.UTF8, "application/json");
 				request.Content = content;
 
-				var response = await client.SendAsync(request);
-				responseContent = await response.Content.ReadAsStringAsync();
-			}
+				var responseContent = await this.ExecuteRequestAsync (request);
 
-			IList<RouteStop> routeStops = new List<RouteStop> ();
-			RoutesReponse<StopRow> data = JsonConvert.DeserializeObject<RoutesReponse<StopRow>>(responseContent);
-			foreach (var row in data.Rows)
-			{
-				routeStops.Add (new RouteStop(row.Name, row.Sequence));
+				RoutesReponse<StopRow> data = JsonConvert.DeserializeObject<RoutesReponse<StopRow>> (responseContent);
+				foreach (var row in data.Rows) {
+					routeStops.Add (new RouteStop (row.Name, row.Sequence));
+				}
 			}
 
 			return routeStops;
@@ -71,25 +77,22 @@ namespace FloripaBus
 
 		public async Task<IList<RouteDeparture>> FindDeparturesByRouteIdAsync (int routeId)
 		{
-			string responseContent;
-			using (var client = new HttpClient ()) 
-			{
-				var request = new HttpRequestMessage(HttpMethod.Post, "https://api.appglu.com/v1/queries/findDeparturesByRouteId/run");
+			IList<RouteDeparture> routeDepartures = new List<RouteDeparture> ();
+
+			using (var request = new HttpRequestMessage (HttpMethod.Post, FIND_DEPARTURES_URL)) {
+
 				AddDefaultHeaders (request);
 
 				var body = "{ \"params\": { \"routeId\": \"" + routeId + "\" } }";
-				var content = new StringContent(body, Encoding.UTF8, "application/json");
+				var content = new StringContent (body, Encoding.UTF8, "application/json");
 				request.Content = content;
 
-				var response = await client.SendAsync(request);
-				responseContent = await response.Content.ReadAsStringAsync();
-			}
+				var responseContent = await this.ExecuteRequestAsync (request);
 
-			IList<RouteDeparture> routeDepartures = new List<RouteDeparture> ();
-			RoutesReponse<DepartureRow> data = JsonConvert.DeserializeObject<RoutesReponse<DepartureRow>>(responseContent);
-			foreach (var row in data.Rows)
-			{
-				routeDepartures.Add (new RouteDeparture(row.Calendar, row.Time));
+				RoutesReponse<DepartureRow> data = JsonConvert.DeserializeObject<RoutesReponse<DepartureRow>> (responseContent);
+				foreach (var row in data.Rows) {
+					routeDepartures.Add (new RouteDeparture (row.Calendar, row.Time));
+				}
 			}
 
 			return routeDepartures;
@@ -102,6 +105,17 @@ namespace FloripaBus
 			request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", encodedAuthentication);
 
 			request.Headers.Add ("X-AppGlu-Environment", "staging");
+		}
+
+		private async Task<string> ExecuteRequestAsync(HttpRequestMessage request)
+		{
+			var response = await _httpClient.SendAsync(request);
+
+			if (response.StatusCode != HttpStatusCode.OK)
+				throw new Exception ("Fail to contact the server");
+
+			var responseContent = await response.Content.ReadAsStringAsync();
+			return responseContent;
 		}
 
 		private class RoutesReponse<T>
