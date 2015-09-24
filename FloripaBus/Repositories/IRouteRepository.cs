@@ -96,9 +96,12 @@ namespace FloripaBus
 		}
 
 		private void AddDefaultHeaders(HttpRequestMessage request)
-		{
+		{			
+			var authentication = string.Format("{0}:{1}", "WKD4N7YMA1uiM8V", "DtdTtzMLQlA0hk2C1Yi5pLyVIlAQ68");
+			var encodedAuthentication = Convert.ToBase64String(Encoding.UTF8.GetBytes(authentication));
+			request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", encodedAuthentication);
+
 			request.Headers.Add ("X-AppGlu-Environment", "staging");
-			request.Headers.Add("Authorization", "Basic V0tENE43WU1BMXVpTThWOkR0ZFR0ek1MUWxBMGhrMkMxWWk1cEx5VklsQVE2OA==");
 		}
 
 		private class RoutesReponse<T>
