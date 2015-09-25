@@ -14,7 +14,7 @@ namespace FloripaBus
 			}
 			set {
 				_route = value;
-				Notify ("Route");
+				Notify (() => Route);
 			}
 		}
 
@@ -29,7 +29,7 @@ namespace FloripaBus
 			}
 			set {
 				_routeStops = value;
-				Notify ("RouteStops");
+				Notify (() => RouteStops);
 			}
 		}
 
@@ -40,7 +40,7 @@ namespace FloripaBus
 			}
 			set {
 				_weekDayDepartures = value;
-				Notify ("WeekDayDepartures");
+				Notify (() => WeekDayDepartures);
 			}
 		}
 
@@ -51,7 +51,7 @@ namespace FloripaBus
 			}
 			set {
 				_saturdayDepartures = value;
-				Notify ("SaturdayDepartures");
+				Notify (() => SaturdayDepartures);
 			}
 		}
 
@@ -62,7 +62,7 @@ namespace FloripaBus
 			}
 			set {
 				_sundayDepartures = value;
-				Notify ("SundayDepartures");
+				Notify (() => SundayDepartures);
 			}
 		}
 
@@ -74,7 +74,7 @@ namespace FloripaBus
 			set {
 				_isLoading = value;
 				this.ShowData = !_isLoading;
-				Notify ("IsLoading");
+				Notify (() => IsLoading);
 			}
 		}
 
@@ -85,7 +85,7 @@ namespace FloripaBus
 			}
 			set {
 				_showData = value;
-				Notify ("ShowData");
+				Notify (() => ShowData);
 			}
 		}
 

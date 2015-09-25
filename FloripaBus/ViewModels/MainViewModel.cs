@@ -17,7 +17,7 @@ namespace FloripaBus
 			}
 			set {
 				_routes = value;
-				Notify ("Routes");
+				Notify (() => Routes);
 			}
 		}
 
@@ -28,7 +28,7 @@ namespace FloripaBus
 			}
 			set {
 				_searchText = value;
-				Notify ("SearchText");
+				Notify (() => SearchText);
 			}
 		}
 
@@ -39,7 +39,7 @@ namespace FloripaBus
 			}
 			set {
 				_isLoading = value;
-				Notify ("IsLoading");
+				Notify (() => IsLoading);
 			}
 		}
 
@@ -62,7 +62,7 @@ namespace FloripaBus
 			set {
 				if (value != null) {
 					_navigationService.NavigateToDetailsAsync (value);
-					Notify ("SelectedRoute");
+					Notify (() => SelectedRoute);
 				}
 			}
 		}
