@@ -3,7 +3,7 @@
 	<ContentPage.Content>
 		<RelativeLayout x:Name="RootLayout" HorizontalOptions="FillAndExpand">
 			<StackLayout>			
-				<Entry Text="{Binding SearchText}" Placeholder="Stop name to search..."></Entry>
+				<SearchBar Placeholder="Street to search..." Text="{Binding SearchText}" SearchCommand="{Binding SearchCommand}"></SearchBar>
 				<Button Text="Search" Command="{Binding SearchCommand}"></Button>
 				<ListView x:Name="RoutesListView" ItemsSource="{Binding Routes}" SelectedItem="{Binding SelectedRoute}">
 					<ListView.ItemTemplate>
