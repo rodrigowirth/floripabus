@@ -1,19 +1,21 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 
 namespace FloripaBus
 {
 	public abstract class ViewModelBase : INotifyPropertyChanged
 	{		
-		#region INotifyPropertyChanged implementation
-
 		public event PropertyChangedEventHandler PropertyChanged;
-
-		#endregion
 
 		protected void Notify(string propertyName){
 			if (this.PropertyChanged != null)
 				this.PropertyChanged (this, new PropertyChangedEventArgs (propertyName));
+		}
+
+		protected async Task DisplayAlertAsync (string message)
+		{
+			await FloripaBus.App.Current.MainPage.DisplayAlert ("Floripa Bus", message, "ok");
 		}
 	}
 }

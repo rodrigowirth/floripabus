@@ -101,28 +101,35 @@ namespace FloripaBus
 		{
 			this.IsLoading = true;
 
-			var stopsList = await _routeRepository.FindStopsByRouteIdAsync (this.Route.Id);
-			this.RouteStops = new ObservableCollection<RouteStop> (stopsList);
+			try 
+			{
+				var stopsList = await _routeRepository.FindStopsByRouteIdAsync (this.Route.Id);
+				this.RouteStops = new ObservableCollection<RouteStop> (stopsList);
 
-			this.WeekDayDepartures = new ObservableCollection<RouteDeparture> ();
-			this.SaturdayDepartures = new ObservableCollection<RouteDeparture> ();
-			this.SundayDepartures = new ObservableCollection<RouteDeparture> ();
+				this.WeekDayDepartures = new ObservableCollection<RouteDeparture> ();
+				this.SaturdayDepartures = new ObservableCollection<RouteDeparture> ();
+				this.SundayDepartures = new ObservableCollection<RouteDeparture> ();
 
-			var departuresList = await _routeRepository.FindDeparturesByRouteIdAsync (this.Route.Id);
-			foreach (var departure in departuresList) {
-				switch (departure.Calendar) {
-				case "WEEKDAY":
-					this.WeekDayDepartures.Add (departure);
-					break;
-				case "SUNDAY":
-					this.SundayDepartures.Add (departure);
-					break;
-				case "SATURDAY":
-					this.SaturdayDepartures.Add (departure);
-					break;
-				default:
-					break;
-				}
+				var departuresList = await _routeRepository.FindDeparturesByRouteIdAsync (this.Route.Id);
+				foreach (var departure in departuresList) {
+					switch (departure.Calendar) {
+					case "WEEKDAY":
+						this.WeekDayDepartures.Add (departure);
+						break;
+					case "SUNDAY":
+						this.SundayDepartures.Add (departure);
+						break;
+					case "SATURDAY":
+						this.SaturdayDepartures.Add (departure);
+						break;
+					default:
+						break;
+					}
+				}	
+			}
+			catch (Exception ex) 
+			{
+				this.DisplayAlertAsync (ex.Message);
 			}
 
 			this.IsLoading = false;

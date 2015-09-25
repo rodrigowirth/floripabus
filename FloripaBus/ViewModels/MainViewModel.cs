@@ -79,8 +79,15 @@ namespace FloripaBus
 		{
 			this.IsLoading = true;
 
-			var routesList = await _routeRepository.FindRoutesByStopNameAsync (this.SearchText);
-			this.Routes = new ObservableCollection<Route> (routesList);
+			try 
+			{
+				var routesList = await _routeRepository.FindRoutesByStopNameAsync (this.SearchText);
+				this.Routes = new ObservableCollection<Route> (routesList);
+			} 
+			catch (Exception ex) 
+			{
+				this.DisplayAlertAsync (ex.Message);
+			}
 
 			this.IsLoading = false;
 		}
