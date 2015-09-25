@@ -33,20 +33,21 @@ namespace FloripaBus
 		{
 			IList<Route> routes = new List<Route> ();
 
+			string responseContent;
 			using (var request = new HttpRequestMessage (HttpMethod.Post, FIND_ROUTES_URL)) {
-			
+				
 				AddDefaultHeaders (request);
 
 				var body = "{ \"params\": { \"stopName\": \"%" + stopName + "%\" } }";
 				var content = new StringContent (body, Encoding.UTF8, "application/json");
 				request.Content = content;
 
-				var responseContent = await this.ExecuteRequestAsync (request);
+				responseContent = await this.ExecuteRequestAsync (request);
+			}
 
-				RoutesReponse<RouteRow> data = JsonConvert.DeserializeObject<RoutesReponse<RouteRow>> (responseContent);
-				foreach (var row in data.Rows) {
-					routes.Add (new Route (row.Id, row.ShortName, row.LongName));
-				}
+			RoutesReponse<RouteRow> data = JsonConvert.DeserializeObject<RoutesReponse<RouteRow>> (responseContent);
+			foreach (var row in data.Rows) {
+				routes.Add (new Route (row.Id, row.ShortName, row.LongName));
 			}
 				
 			return routes;
@@ -56,6 +57,7 @@ namespace FloripaBus
 		{
 			IList<RouteStop> routeStops = new List<RouteStop> ();
 
+			string responseContent;
 			using (var request = new HttpRequestMessage (HttpMethod.Post, FIND_STOPS_URL)) {
 				
 				AddDefaultHeaders (request);
@@ -64,12 +66,12 @@ namespace FloripaBus
 				var content = new StringContent (body, Encoding.UTF8, "application/json");
 				request.Content = content;
 
-				var responseContent = await this.ExecuteRequestAsync (request);
+				responseContent = await this.ExecuteRequestAsync (request);
+			}
 
-				RoutesReponse<StopRow> data = JsonConvert.DeserializeObject<RoutesReponse<StopRow>> (responseContent);
-				foreach (var row in data.Rows) {
-					routeStops.Add (new RouteStop (row.Name, row.Sequence));
-				}
+			RoutesReponse<StopRow> data = JsonConvert.DeserializeObject<RoutesReponse<StopRow>> (responseContent);
+			foreach (var row in data.Rows) {
+				routeStops.Add (new RouteStop (row.Name, row.Sequence));
 			}
 
 			return routeStops;
@@ -79,6 +81,7 @@ namespace FloripaBus
 		{
 			IList<RouteDeparture> routeDepartures = new List<RouteDeparture> ();
 
+			string responseContent;
 			using (var request = new HttpRequestMessage (HttpMethod.Post, FIND_DEPARTURES_URL)) {
 
 				AddDefaultHeaders (request);
@@ -87,12 +90,12 @@ namespace FloripaBus
 				var content = new StringContent (body, Encoding.UTF8, "application/json");
 				request.Content = content;
 
-				var responseContent = await this.ExecuteRequestAsync (request);
+				responseContent = await this.ExecuteRequestAsync (request);
+			}
 
-				RoutesReponse<DepartureRow> data = JsonConvert.DeserializeObject<RoutesReponse<DepartureRow>> (responseContent);
-				foreach (var row in data.Rows) {
-					routeDepartures.Add (new RouteDeparture (row.Calendar, row.Time));
-				}
+			RoutesReponse<DepartureRow> data = JsonConvert.DeserializeObject<RoutesReponse<DepartureRow>> (responseContent);
+			foreach (var row in data.Rows) {
+				routeDepartures.Add (new RouteDeparture (row.Calendar, row.Time));
 			}
 
 			return routeDepartures;
