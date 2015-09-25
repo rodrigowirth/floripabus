@@ -94,10 +94,10 @@ namespace FloripaBus
 			_routeRepository = routeRepository;
 
 			this.Route = route;
-			this.Load ();
+			this.LoadAsync ();
 		}
 
-		public async void Load()
+		public async void LoadAsync()
 		{
 			this.IsLoading = true;
 
