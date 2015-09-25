@@ -61,7 +61,7 @@ namespace FloripaBus
 			}
 			set {
 				if (value != null) {
-					_navigationService.NavigateToDetails (value);
+					_navigationService.NavigateToDetailsAsync (value);
 					Notify ("SelectedRoute");
 				}
 			}

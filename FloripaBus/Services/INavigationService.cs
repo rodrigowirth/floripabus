@@ -5,12 +5,12 @@ namespace FloripaBus
 {
 	public interface INavigationService
 	{
-		Task NavigateToDetails(Route route);
+		Task NavigateToDetailsAsync(Route route);
 	}
 
 	public class NavigationService : INavigationService
 	{
-		public async Task NavigateToDetails (Route route)
+		public async Task NavigateToDetailsAsync (Route route)
 		{
 			await App.Current.MainPage.Navigation.PushAsync (new DetailsView (route));
 		}

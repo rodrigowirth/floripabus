@@ -64,7 +64,7 @@ namespace FloripaBus.Tests
 
 			viewModel.SelectedRoute = new Route (1, String.Empty, String.Empty);
 
-			navigationServiceMock.Verify (x => x.NavigateToDetails (It.IsAny<Route>()), Times.Once);
+			navigationServiceMock.Verify (x => x.NavigateToDetailsAsync (It.IsAny<Route>()), Times.Once);
 		}
 
 		[Test]

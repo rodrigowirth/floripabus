@@ -6,8 +6,7 @@ using Ninject.Parameters;
 namespace FloripaBus
 {
 	public class Ninja
-	{
-		private static Object _lock = new Object();
+	{		
 		private static IKernel _kernel = new StandardKernel();	
 
 		public static void LoadModule(NinjectModule module)
