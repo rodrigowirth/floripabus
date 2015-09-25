@@ -12,9 +12,6 @@ namespace FloripaBus
 
 		public App ()
 		{
-			DependencyService.Register<MainViewModel> ();
-			DependencyService.Register<IRouteRepository, RouteRepository> ();
-
 			Ninja.LoadModule (new SharedModule ());
 
 			// The root page of your application
