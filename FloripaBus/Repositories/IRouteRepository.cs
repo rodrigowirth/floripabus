@@ -18,6 +18,8 @@ namespace FloripaBus
 
 	public class RouteRepository : IRouteRepository
 	{		
+		private const string USER = "WKD4N7YMA1uiM8V";
+		private const string PASSWORD = "DtdTtzMLQlA0hk2C1Yi5pLyVIlAQ68";
 		private const string FIND_ROUTES_URL = "https://api.appglu.com/v1/queries/findRoutesByStopName/run";
 		private const string FIND_STOPS_URL = "https://api.appglu.com/v1/queries/findStopsByRouteId/run";
 		private const string FIND_DEPARTURES_URL = "https://api.appglu.com/v1/queries/findDeparturesByRouteId/run";
@@ -38,7 +40,12 @@ namespace FloripaBus
 				
 				AddDefaultHeaders (request);
 
-				var body = "{ \"params\": { \"stopName\": \"%" + stopName + "%\" } }";
+				var body = new StringBuilder ()
+					.Append ("{ \"params\": { \"stopName\": \"%")
+					.Append (stopName)
+					.Append ("%\" } }")
+					.ToString ();
+				
 				var content = new StringContent (body, Encoding.UTF8, "application/json");
 				request.Content = content;
 
@@ -62,7 +69,12 @@ namespace FloripaBus
 				
 				AddDefaultHeaders (request);
 
-				var body = "{ \"params\": { \"routeId\": \"" + routeId + "\" } }";
+				var body = new StringBuilder ()
+					.Append ("{ \"params\": { \"routeId\": \"")
+					.Append (routeId)
+					.Append ("\" } }")
+					.ToString ();
+
 				var content = new StringContent (body, Encoding.UTF8, "application/json");
 				request.Content = content;
 
@@ -86,7 +98,12 @@ namespace FloripaBus
 
 				AddDefaultHeaders (request);
 
-				var body = "{ \"params\": { \"routeId\": \"" + routeId + "\" } }";
+				var body = new StringBuilder ()
+					.Append ("{ \"params\": { \"routeId\": \"")
+					.Append (routeId)
+					.Append ("\" } }")
+					.ToString ();
+
 				var content = new StringContent (body, Encoding.UTF8, "application/json");
 				request.Content = content;
 
@@ -103,7 +120,7 @@ namespace FloripaBus
 
 		private void AddDefaultHeaders(HttpRequestMessage request)
 		{			
-			var authentication = string.Format("{0}:{1}", "WKD4N7YMA1uiM8V", "DtdTtzMLQlA0hk2C1Yi5pLyVIlAQ68");
+			var authentication = string.Format("{0}:{1}", USER, PASSWORD);
 			var encodedAuthentication = Convert.ToBase64String(Encoding.UTF8.GetBytes(authentication));
 			request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", encodedAuthentication);
 

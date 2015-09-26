@@ -75,7 +75,7 @@ namespace FloripaBus.Tests
 			viewModel.SelectedRoute = new Route (1, String.Empty, String.Empty);
 
 			Assert.IsNull (viewModel.SelectedRoute);
-		}
+		}			
 	}
 }
 
