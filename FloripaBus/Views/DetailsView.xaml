@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="FloripaBus.DetailsView" Title="{Binding Title}">	
+	<ContentPage Title="Stops">
+		<StackLayout>		
+			<ActivityIndicator IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" VerticalOptions="Start" />		
+			<ListView x:Name="RouteStopsListView" ItemsSource="{Binding RouteStops}" IsVisible="{Binding ShowData}">
+						<ListView.ItemTemplate>
+						<DataTemplate>
+							<ViewCell>
+								<ViewCell.View>
+									<StackLayout Spacing="5" Orientation="Horizontal">									
+		                    			<Label Text="{Binding Sequence}"></Label>
+		                    			<Label Text="{Binding Name}"></Label>
+		                  			</StackLayout>
+								</ViewCell.View>
+							</ViewCell>
+						</DataTemplate>
+					</ListView.ItemTemplate>
+				</ListView>
+		</StackLayout>	
+	</ContentPage>
+	<CarouselPage Title="Departures">
+		<ContentPage>
+			<StackLayout>
+				<Label Text="Weekday" XAlign="Center" FontSize="22"></Label>
+				<Label Text="Swipe for other days" XAlign="Center"></Label>
+				<ListView x:Name="WeekdayDeparturesView" ItemsSource="{Binding WeekDayDepartures}">
+					<ListView.ItemTemplate>
+						<DataTemplate>
+							<ViewCell>
+								<ViewCell.View>
+									<StackLayout Spacing="5">									
+		                    			<Label Text="{Binding Time}"></Label>
+		                  			</StackLayout>
+								</ViewCell.View>
+							</ViewCell>
+						</DataTemplate>
+					</ListView.ItemTemplate>
+				</ListView>
+			</StackLayout>
+		</ContentPage>
+		<ContentPage>
+			<StackLayout>
+				<Label Text="Saturday" XAlign="Center" FontSize="22"></Label>
+				<Label Text="Swipe for other days" XAlign="Center"></Label>
+				<ListView x:Name="SaturdayDeparturesView" ItemsSource="{Binding SaturdayDepartures}">
+					<ListView.ItemTemplate>
+						<DataTemplate> 
+							<ViewCell>
+								<ViewCell.View>
+									<StackLayout Spacing="5">									
+		                    			<Label Text="{Binding Time}"></Label>
+		                  			</StackLayout>
+								</ViewCell.View>
+							</ViewCell>
+						</DataTemplate>
+					</ListView.ItemTemplate>
+				</ListView>
+			</StackLayout>
+		</ContentPage>
+		<ContentPage>
+			<StackLayout>
+				<Label Text="Sunday" XAlign="Center" FontSize="22"></Label>
+				<Label Text="Swipe for other days" XAlign="Center"></Label>
+				<ListView x:Name="SundayDeparturesView" ItemsSource="{Binding SundayDepartures}">
+					<ListView.ItemTemplate>
+						<DataTemplate>
+							<ViewCell>
+								<ViewCell.View>
+									<StackLayout Spacing="5">									
+		                    			<Label Text="{Binding Time}"></Label>
+		                  			</StackLayout>
+								</ViewCell.View>
+							</ViewCell>
+						</DataTemplate>
+					</ListView.ItemTemplate>
+				</ListView>
+			</StackLayout>
+		</ContentPage>
+	</CarouselPage>
+</TabbedPage>

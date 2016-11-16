@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FloripaBus", "FloripaBus\FloripaBus.csproj", "{6E2FA592-C3E7-4964-8A3F-8EFD338F789F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FloripaBus.Droid", "Droid\FloripaBus.Droid.csproj", "{07119A85-BFB0-4C5D-BE8F-9CEA05D51FF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FloripaBus.Tests", "FloripaBus.Tests\FloripaBus.Tests.csproj", "{EF98B762-BD8A-4F3D-8B0E-23E8095A9208}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{07119A85-BFB0-4C5D-BE8F-9CEA05D51FF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07119A85-BFB0-4C5D-BE8F-9CEA05D51FF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07119A85-BFB0-4C5D-BE8F-9CEA05D51FF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07119A85-BFB0-4C5D-BE8F-9CEA05D51FF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E2FA592-C3E7-4964-8A3F-8EFD338F789F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E2FA592-C3E7-4964-8A3F-8EFD338F789F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E2FA592-C3E7-4964-8A3F-8EFD338F789F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E2FA592-C3E7-4964-8A3F-8EFD338F789F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF98B762-BD8A-4F3D-8B0E-23E8095A9208}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF98B762-BD8A-4F3D-8B0E-23E8095A9208}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF98B762-BD8A-4F3D-8B0E-23E8095A9208}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF98B762-BD8A-4F3D-8B0E-23E8095A9208}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
